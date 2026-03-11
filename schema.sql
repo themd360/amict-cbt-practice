@@ -1,0 +1,32 @@
+-- AMICT CBT Practice Database Schema
+
+CREATE TABLE Users (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    username VARCHAR(50) NOT NULL UNIQUE,
+    password VARCHAR(255) NOT NULL,
+    email VARCHAR(100) NOT NULL UNIQUE,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE Questions (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    question_text TEXT NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE Answers (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    question_id INT,
+    answer_text TEXT NOT NULL,
+    is_correct BOOLEAN NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (question_id) REFERENCES Questions(id) ON DELETE CASCADE
+);
+
+CREATE TABLE Results (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    user_id INT,
+    score INT NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (user_id) REFERENCES Users(id) ON DELETE CASCADE
+);
